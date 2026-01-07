@@ -1,0 +1,110 @@
+*{
+    margin:0 ;
+    padding: 0;
+}
+.navigation1{
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    position: sticky;
+    background-color: rgb(218, 219, 146);
+    top: 0;
+}
+.navigation1 > div{
+    flex-grow: 1;
+    flex-basis: auto;
+    flex-shrink: 1;
+}
+.navigation1 div a{
+    text-decoration: none;
+    color: black;
+    
+}
+.logo_div{
+    text-align: start;
+    padding: 10px;
+    align-content: center;
+}
+.middle_div{
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+.login_div{
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+}
+.hide_butt{
+        display: none;
+    }
+@media (width<=600px) {
+    .navigation1{    
+        flex-direction: column;
+        flex-wrap: nowrap;
+    }
+    .login_div, .middle_div{
+        margin-bottom: 10px;
+        display: none;
+         flex-direction: column;
+        flex-wrap: nowrap;
+    }
+    .resize{
+        display: flex;
+    }
+    .hide_butt{
+        display: block;
+    }}
+.img{
+    height: 300px;
+    width: 450px;
+    background-size: cover;
+    background-color: aqua;
+    margin: 10px;
+}
+.imgs{
+    height: 100%;
+    width: 100%;
+}
+.book_detail {
+  height: 500px;
+  width:90% ;
+  max-width: 600px;
+  background-color: rgb(240, 240, 212);
+  
+  margin: 10px auto; 
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.details{
+    margin-top: 10px;
+text-align: center;}
+.down_read_btn {
+    display: flex;              
+    justify-content: space-around;
+    align-items: center;      
+    margin-top: 10px; 
+    width: 100%;            
+}
+.down_read_btn > a {
+    text-decoration: none;
+    background-color: rgb(153, 156, 125);
+    color: rgb(37, 37, 37);
+    height: 30px;
+    width: 30%;
+    text-align: center;
+    border-radius: 5px;
+    transition: 0.12s;
+    align-content: center;
+}
+.down_read_btn > a:hover{
+   background-color: rgb(143, 146, 120);
+}
+
+
