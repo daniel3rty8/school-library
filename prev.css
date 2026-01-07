@@ -1,6 +1,7 @@
 *{
     margin:0 ;
     padding: 0;
+     box-sizing: border-box;
 }
 .navigation1{
     display: flex;
@@ -57,7 +58,12 @@
     }
     .hide_butt{
         display: block;
-    }}
+    }
+    .img{
+        max-width: 100%;
+    }
+}
+
 .img{
     height: 300px;
     width: 450px;
@@ -106,5 +112,6 @@ text-align: center;}
 .down_read_btn > a:hover{
    background-color: rgb(143, 146, 120);
 }
-
-
+.hidden {
+  display: none;
+}
