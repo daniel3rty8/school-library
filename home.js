@@ -44,3 +44,37 @@ for (let i = 0; i < books.length; i++) {
 
   books_box.appendChild(book);
 }
+
+const searchInput = document.getElementById("searchInput");
+const searchResults = document.getElementById("searchResults");
+
+if (searchInput) {
+  searchInput.addEventListener("input", () => {
+    const query = searchInput.value.toLowerCase().trim();
+    searchResults.innerHTML = "";
+
+    if (query === "") {
+      searchResults.style.display = "none";
+      return;
+    }
+
+    const matches = books_prev.filter(book =>
+      book.title.toLowerCase().includes(query)
+    );
+
+    if (matches.length === 0) {
+      searchResults.innerHTML = "<div>No results</div>";
+    } else {
+      matches.forEach(book => {
+        const item = document.createElement("div");
+        item.textContent = book.title;
+        item.addEventListener("click", () => {
+          window.location.href = `preview.html?id=${book.id}`;
+        });
+        searchResults.appendChild(item);
+      });
+    }
+
+    searchResults.style.display = "block";
+  });
+}
