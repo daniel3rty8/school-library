@@ -12,7 +12,6 @@ window.addEventListener('resize',()=>{
     middle_div.style.display="flex"
     but=true
     container.classList.add("change")
-    navigation2.classList.add("change")
 
   }
 })
@@ -23,7 +22,6 @@ container.addEventListener("click",()=>{
           middle_div.style.display="none"
           login_div.style.display="none"
           container.classList.remove("change")
-          navigation2.classList.remove("change")
 
   } 
   else {
@@ -147,3 +145,4 @@ window.addEventListener("scroll",()=>{
       ticking = true;
   }
 })
+
