@@ -107,7 +107,7 @@ if (searchInput) {
     }
 
     const matches = books.filter(book =>
-      book.title.toLowerCase().includes(query)
+      book.book_name.toLowerCase().includes(query)
     );
 
     if (matches.length === 0) {
@@ -115,7 +115,7 @@ if (searchInput) {
     } else {
       matches.forEach(book => {
         const item = document.createElement("div");
-        item.textContent = book.title;
+        item.textContent = book.book_name;
         item.addEventListener("click", () => {
           window.location.href = `preview.html?id=${book.id}`;
         });
