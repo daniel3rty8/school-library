@@ -1,49 +1,97 @@
-import { books, books_prev } from "./data.js";
-const hide_butt=document.getElementById("hide_butt");
+import { books} from "./data.js";
 const middle_div=document.getElementById("middle_div");
 const login_div = document.getElementById("login_div");
 const books_box=document.getElementById("books_box");
+const typeButtons =document.querySelectorAll("#navigation2 .btn");
+const gradeSelect = document.getElementById("grade-level");  
+const navigation2=document.getElementById("navgarion2");
 
 let but = true;
 window.addEventListener('resize',()=>{
   if(window.innerWidth >= 600){
     middle_div.style.display="flex"
-    login_div.style.display="flex"
-     hide_butt.textContent = "hide";
+    but=true
+    container.classList.add("change")
+    navigation2.classList.add("change")
+
   }
 })
-hide_butt.addEventListener("click", () => {
-  if ( middle_div.style.display==="flex") {
-    hide_butt.textContent = "show";
-    middle_div.style.display="none"
-    login_div.style.display="none"
+const container=document.getElementById("container")
+container.addEventListener("click",()=>{
+     if (but) {
+          but=false
+          middle_div.style.display="none"
+          login_div.style.display="none"
+          container.classList.remove("change")
+          navigation2.classList.remove("change")
 
-  } else {
-    hide_butt.textContent = "hide";
-       middle_div.style.display="flex"
-    login_div.style.display="flex"
-    but=!but
-}})
-for (let i = 0; i < books.length; i++) {
-  let book = document.createElement("a");
-  book.href = `preview.html?id=${books[i].id}`;
-  book.className = "book-card";
+  } 
+  else {
+    but=true
+    middle_div.style.display="flex";
+    login_div.style.display="flex";
+    container.classList.add("change");
+    navigation2.classList.add("change")
+}
+          
+        })
 
-  book.innerHTML = `
+let selectedType = "All";
+
+function displayboxes(bookList){
+  books_box.innerHTML="";
+
+  if (bookList.length === 0) {
+    books_box.innerHTML = "No books found.";
+    return;
+  }
+  bookList.forEach(item=>{
+    const book = document.createElement("a");
+    book.href = `preview.html?id=${item.id}`;
+    book.className = "book-card";
+    book.innerHTML = `
     <div class="image_box">
-      <img src="${books[i].book_photo}" class="imgs">
+      <img src="${item.book_photo}" class="imgs">
     </div>
     <div class="object">
-      <div class="books_name">${books[i].book_name}</div>
-      <div class="books_grade">Grade ${books[i].grade_level}</div>
+      <div class="books_name">${item.book_name}</div>
+      <div class="books_grade">Grade ${item.grade_level}</div>
       <div class="books_dicription">
-        ${books[i].dicription}
+        ${item.dicription}
       </div>
     </div>
   `;
-
   books_box.appendChild(book);
+  })
 }
+
+
+function applyFilters(){
+  const selectgrade=gradeSelect.value
+const filteredBooks = books.filter(book => {
+    const gradeSel =
+      selectgrade === "All" ||
+      String(book.grade_level) === selectgrade;
+    const typeMatch =
+      selectedType === "All" ||
+      book.type === selectedType;
+
+    return gradeSel && typeMatch;  
+  });
+    displayboxes(filteredBooks);
+}
+
+gradeSelect.addEventListener("change", applyFilters);
+
+typeButtons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    selectedType = btn.dataset.type;
+    applyFilters();
+  });
+});
+
+
+applyFilters();
 
 const searchInput = document.getElementById("searchInput");
 const searchResults = document.getElementById("searchResults");
@@ -58,7 +106,7 @@ if (searchInput) {
       return;
     }
 
-    const matches = books_prev.filter(book =>
+    const matches = books.filter(book =>
       book.title.toLowerCase().includes(query)
     );
 
@@ -78,3 +126,24 @@ if (searchInput) {
     searchResults.style.display = "block";
   });
 }
+
+let ticking = false
+
+window.addEventListener("scroll",()=>{
+  if(!ticking){
+    window.requestAnimationFrame(()=>{
+       const currentScrollPos = window.scrollY;
+       const nav = document.getElementById("navigation1")
+      if (currentScrollPos <= 20 ) {
+        nav.style.backgroundColor="rgb(218, 219, 146)"
+      } 
+      else {
+        nav.style.backgroundColor="rgba(208, 209, 135, 1)"
+   
+      }
+
+      ticking = false;
+    });
+      ticking = true;
+  }
+})
