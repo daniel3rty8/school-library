@@ -29,7 +29,6 @@ container.addEventListener("click",()=>{
     middle_div.style.display="flex";
     login_div.style.display="flex";
     container.classList.add("change");
-    navigation2.classList.add("change")
 }
           
         })
@@ -90,4 +89,5 @@ if (searchInput) {
     searchResults.style.display = "block";
   });
 }
+
 
