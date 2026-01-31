@@ -4,18 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="home.css">
-    <title>Document</title>
+    <title>online library</title>
 </head>
 <body>
-    <div class="navigation1">
-        <div class="logo_div" ><a href="index.html">logo</a></div> 
-        <div class="hide_butt"><button id="hide_butt">hide</button></div>    
+  
+    <div class="navigation1" id="navigation1">
+        <div class="logo_div" ><a href="library.html">logo</a></div> 
+        <div class="container" id="container">
+                <div class="bar1"></div>
+                <div class="bar2"></div>
+                <div class="bar3"></div>
+        </div>
+       
         <div class="middle_div" id="middle_div">
-            <div><a href="#EduLibrary" style="color: rgb(4, 97, 97);">EduLibrary</a></div> 
-            <div><a href="#quiz">quiz</a></div>
-            <div><a href="#grade">grade</a></div>
-            <div><a href="#books">books</a></div>
-            <div><a href="#about">about</a></div>
+            <div><a href="home.html" >Home</a></div> 
+            <div><a href="library.html" style="color: rgb(4, 97, 97);">Library</a></div>
+            <div><a href="quiz.html">Quiz</a></div>
+            <div><a href="about.html">About</a></div>
         </div>
         
         <div class="login_div"id="login_div">
@@ -23,8 +28,25 @@
           <input type="text" id="searchInput" placeholder="Search book..." />
           <div id="searchResults" class="search_results"></div>
         </div>
-        <div><a href="#log in">log in</a></div></div>
+        </div>
     </div>
+      <div class="navigation2" id="navigation2">
+        <button class="btn" data-type="All">all</button>
+        <button class="btn" data-type="Textbook">Textbooks</button>
+        <button class="btn" data-type="PDF Notes">PDF Notes</button>
+        <button class="btn" data-type="Past Exam">Past Exam</button>
+      <div>
+      <select id="grade-level">
+        <option value="All">All grades</option>
+        <option value="9">grade 9</option>
+        <option value="10">grade 10</option>
+        <option value="11">grade 11</option>
+        <option value="12">grade 12</option>
+      </select>
+
+      </div>
+    </div>
+    
     <div class="books_box" id="books_box"></div>
     <div class="footer"><footer class="site-footer">
   <div class="footer-container">
@@ -40,8 +62,9 @@
     <div class="footer-section">
       <h4>Quick Links</h4>
       <ul>
-        <li><a href="index.html">Home</a></li>
+        <li><a href="home.html">Home</a></li>
         <li><a href="library.html">Library</a></li>
+        <li><a href="quiz.html">quiz</a></li>
         <li><a href="about.html">About</a></li>
       </ul>
     </div>
@@ -63,6 +86,5 @@
 </footer>
 </div>
     <script type="module" src="home.js"></script>
-
 </body>
 </html>
