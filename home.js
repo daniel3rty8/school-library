@@ -1,148 +1,75 @@
-import { books} from "./data.js";
-const middle_div=document.getElementById("middle_div");
+import { books } from "./data.js";
+import { displayboxes } from "./books.js";
+import { applyFilters} from "./filter.js";
+import {searchFilter} from "./search.js"
+import {hide_show} from "./hide_show.js"
+//  DOM ELEMENTS 
+const middle_div = document.getElementById("middle_div");
 const login_div = document.getElementById("login_div");
-const books_box=document.getElementById("books_box");
-const typeButtons =document.querySelectorAll("#navigation2 .btn");
-const gradeSelect = document.getElementById("grade-level");  
-const navigation2=document.getElementById("navgarion2");
+const container = document.getElementById("container");
 
-let but = true;
-window.addEventListener('resize',()=>{
-  if(window.innerWidth >= 600){
-    middle_div.style.display="flex"
-    but=true
-    container.classList.add("change")
+const typeButtons = document.querySelectorAll("#navigation2 .btn");
+const gradeSelect = document.getElementById("grade-level");
+const navigation2 = document.getElementById("navigation2");
 
-  }
-})
-const container=document.getElementById("container")
-container.addEventListener("click",()=>{
-     if (but) {
-          but=false
-          middle_div.style.display="none"
-          login_div.style.display="none"
-          container.classList.remove("change")
+const searchInput = document.getElementById("searchInput");
 
-  } 
-  else {
-    but=true
-    middle_div.style.display="flex";
-    login_div.style.display="flex";
-    container.classList.add("change");
-    navigation2.classList.add("change")
-}
-          
-        })
+// ===================== STATE =====================
 
 let selectedType = "All";
+let searchQuery = "";
 
-function displayboxes(bookList){
-  books_box.innerHTML="";
 
-  if (bookList.length === 0) {
-    books_box.innerHTML = "No books found.";
-    return;
-  }
-  bookList.forEach(item=>{
-    const book = document.createElement("a");
-    book.href = `preview.html?id=${item.id}`;
-    book.className = "book-card";
-    book.innerHTML = `
-    <div class="image_box">
-      <img src="${item.book_photo}" class="imgs">
-    </div>
-    <div class="object">
-      <div class="books_name">${item.book_name}</div>
-      <div class="books_grade">Grade ${item.grade_level}</div>
-      <div class="books_dicription">
-        ${item.dicription}
-      </div>
-    </div>
-  `;
-  books_box.appendChild(book);
-  })
+// RESPONSIVE NAV 
+hide_show(middle_div, login_div,container,navigation2)
+//  MAIN DISPLAY PIPELINE 
+function updateDisplay() {
+  let filtered = applyFilters(
+    books,
+    gradeSelect.value,
+    selectedType
+  );
+
+  filtered = searchFilter(filtered, searchQuery);
+
+  displayboxes(filtered);
 }
 
-
-function applyFilters(){
-  const selectgrade=gradeSelect.value
-const filteredBooks = books.filter(book => {
-    const gradeSel =
-      selectgrade === "All" ||
-      String(book.grade_level) === selectgrade;
-    const typeMatch =
-      selectedType === "All" ||
-      book.type === selectedType;
-
-    return gradeSel && typeMatch;  
-  });
-    displayboxes(filteredBooks);
-}
-
-gradeSelect.addEventListener("change", applyFilters);
+//  FILTER EVENTS 
+gradeSelect.addEventListener("change", updateDisplay);
 
 typeButtons.forEach(btn => {
   btn.addEventListener("click", () => {
     selectedType = btn.dataset.type;
-    applyFilters();
+    updateDisplay();
   });
 });
 
+// SEARCH 
+searchInput.addEventListener("input", () => {
+  searchQuery = searchInput.value.trim();
+  updateDisplay();
+});
 
-applyFilters();
+//  INITIAL RENDER 
+updateDisplay();
+ 
+//  SCROLL NAV EFFECT 
+let ticking = false;
 
-const searchInput = document.getElementById("searchInput");
-const searchResults = document.getElementById("searchResults");
+window.addEventListener("scroll", () => {
+  if (ticking) return;
 
-if (searchInput) {
-  searchInput.addEventListener("input", () => {
-    const query = searchInput.value.toLowerCase().trim();
-    searchResults.innerHTML = "";
+  ticking = true;
+  requestAnimationFrame(() => {
+    const nav = document.getElementById("navigation1");
+    if (!nav) return;
 
-    if (query === "") {
-      searchResults.style.display = "none";
-      return;
-    }
+    nav.style.backgroundColor =
+      window.scrollY <= 20
+        ? "rgba(225, 226, 164, 1)"
+        : "rgba(222, 223, 156, 1)";
 
-    const matches = books.filter(book =>
-      book.book_name.toLowerCase().includes(query)
-    );
-
-    if (matches.length === 0) {
-      searchResults.innerHTML = "<div>No results</div>";
-    } else {
-      matches.forEach(book => {
-        const item = document.createElement("div");
-        item.textContent = book.book_name;
-        item.addEventListener("click", () => {
-          window.location.href = `preview.html?id=${book.id}`;
-        });
-        searchResults.appendChild(item);
-      });
-    }
-
-    searchResults.style.display = "block";
+    ticking = false;
   });
-}
-
-let ticking = false
-
-window.addEventListener("scroll",()=>{
-  if(!ticking){
-    window.requestAnimationFrame(()=>{
-       const currentScrollPos = window.scrollY;
-       const nav = document.getElementById("navigation1")
-      if (currentScrollPos <= 20 ) {
-        nav.style.backgroundColor="rgb(218, 219, 146)"
-      } 
-      else {
-        nav.style.backgroundColor="rgba(208, 209, 135, 1)"
-   
-      }
-
-      ticking = false;
-    });
-      ticking = true;
-  }
-})
-
+});
