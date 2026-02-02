@@ -1,47 +1,29 @@
 import { books } from "./data.js";
+import { searchFilter } from "./search.js";
+import {hide_show2} from "./hide_show.js"
 
 const params = new URLSearchParams(window.location.search);
 const bookId = params.get("id");
-const hide_butt = document.getElementById("hide_butt");
+
 const middle_div = document.getElementById("middle_div");
-const login_div = document.getElementById("login_div");
+const container = document.getElementById("container");
+const navigation1 = document.getElementById("navigation1");
+const bookDetail = document.getElementById("book_detail");
+const searchInput = document.getElementById("searchInput");
+const searchResults = document.getElementById("searchResults");
+const cancel_container= document.getElementById("cancel_container")
 
-let but = true;
-window.addEventListener('resize',()=>{
-  if(window.innerWidth >= 600){
-    middle_div.style.display="flex"
-    but=true
-    container.classList.add("change")
 
-  }
-})
-const container=document.getElementById("container")
-container.addEventListener("click",()=>{
-     if (but) {
-          but=false
-          middle_div.style.display="none"
-          login_div.style.display="none"
-          container.classList.remove("change")
 
-  } 
-  else {
-    but=true
-    middle_div.style.display="flex";
-    login_div.style.display="flex";
-    container.classList.add("change");
-}
-          
-        })
+ hide_show2(middle_div,container,cancel_container)
+// BOOK DETAILS
+const book = books.find(b => String(b.id) === String(bookId));
 
-const book = books.find(b => b.id === bookId);
-
-const container_books = document.getElementById("book_detail");
-
-if (!book) {
-  container_books.innerHTML = "<p>Book not found.</p>";
-} else {
-  container_books.innerHTML = `
-  <div class="img"><img src="${book.book_photo}" class="imgs"></div>
+bookDetail.innerHTML = book
+  ? `
+    <div class="img">
+      <img src="${book.book_photo}" class="imgs">
+    </div>
     <div class="details">
       <h1>${book.book_name}</h1>
       <p>${book.curriculum}</p>
@@ -51,43 +33,28 @@ if (!book) {
     <div class="down_read_btn">
       <a href="${book.file}" download>Download</a>
       <a href="${book.file}" target="_blank">Read Online</a>
-      
     </div>
-    `;
-}
+  `
+  : "<p>Book not found.</p>";
 
-const searchInput = document.getElementById("searchInput");
-const searchResults = document.getElementById("searchResults");
+// SEARCH
+searchInput.addEventListener("input", () => {
+  const query = searchInput.value.trim();
+  searchResults.innerHTML = "";
 
-if (searchInput) {
-  searchInput.addEventListener("input", () => {
-    const query = searchInput.value.toLowerCase().trim();
-    searchResults.innerHTML = "";
+  if (!query) {
+    searchResults.style.display = "none";
+    return;
+  }
 
-    if (query === "") {
-      searchResults.style.display = "none";
-      return;
-    }
+  const results = searchFilter(books, query);
 
-    const matches = books.filter(book =>
-      book.title.toLowerCase().includes(query)
-    );
-
-    if (matches.length === 0) {
-      searchResults.innerHTML = "<div>No results</div>";
-    } else {
-      matches.forEach(book => {
-        const item = document.createElement("div");
-        item.textContent = book.title;
-        item.addEventListener("click", () => {
-          window.location.href = `preview.html?id=${book.id}`;
-        });
-        searchResults.appendChild(item);
-      });
-    }
-
-    searchResults.style.display = "block";
+  results.forEach(b => {
+    const div = document.createElement("div");
+    div.textContent = b.book_name;
+    div.onclick = () => location.href = `preview.html?id=${b.id}`;
+    searchResults.appendChild(div);
   });
-}
 
-
+  searchResults.style.display = "block";
+});
