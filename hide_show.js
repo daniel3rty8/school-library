@@ -16,43 +16,43 @@ function updateUI(){
     container.classList.toggle("change",menuOpen);
  
 }
-//  MENU TOGGLE 
 container.addEventListener("click", () => {
    menuOpen=!menuOpen
  updateUI()
 });
 
 }
+
 //for preview page
-export function hide_show2(middle_div,container,cancel_container){
-   let menuOpen =false;
-window.addEventListener("resize", () => {
-  if (window.innerWidth >= 600) {
-    menuOpen=true
+export function hide_show2(middle_div, container, cancel_container) {
+  let menuOpen = false;
+
+  function updateUI() {
+    if (window.innerWidth >= 600) {
+
+      middle_div.style.display = "flex";
+      cancel_container.style.display = "none";
+      container.classList.add("change");
+    } else {
+
+      middle_div.style.display = menuOpen ? "flex" : "none";
+      cancel_container.style.display = menuOpen ? "flex" : "none";
+      container.classList.toggle("change", menuOpen);
+    }
   }
-  else{
-   menuOpen=false
-  }
-  updateUI()
-});
-function updateUI(){
-      middle_div.style.display = menuOpen?"flex":"none";
-      cancel_container.style.display=menuOpen?"flex":"none",
-    container.classList.toggle("change",menuOpen);
 
- 
-}
- cancel_container.addEventListener("click",()=>{ 
-      middle_div.style.display = "none";
-      container.classList.remove("change");
-      menuOpen = false;
-          cancel_container.style.display="none"
-    })
-//  MENU TOGGLE 
-container.addEventListener("click", () => {
-   menuOpen=!menuOpen
- updateUI()
+  window.addEventListener("resize", updateUI);
 
-});
+  container.addEventListener("click", () => {
+    menuOpen = !menuOpen;
+    updateUI();
+  });
 
+
+  cancel_container.addEventListener("click", () => {
+    menuOpen = false;
+    updateUI();
+  });
+
+  updateUI();
 }
