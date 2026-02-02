@@ -1,5 +1,5 @@
 import { books } from "./data.js";
-import { displayboxes } from "./books.js";
+import { displayboxes } from "./book.js";
 import { applyFilters} from "./filter.js";
 import {searchFilter} from "./search.js"
 import {hide_show} from "./hide_show.js"
@@ -73,3 +73,4 @@ window.addEventListener("scroll", () => {
     ticking = false;
   });
 });
+
