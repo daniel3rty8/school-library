@@ -6,12 +6,12 @@
 }
 .navigation1{
     display: flex;
-    gap: 1rem;
     flex-wrap: wrap;
     position: sticky;
     background-color: rgb(218, 219, 146);
     top: 0;
     z-index: 1000;
+    justify-content: space-around;
 }
 .navigation1 > div{
     flex-grow: 1;
@@ -23,11 +23,7 @@
     color: black;
     
 }
-.logo_div{
-    text-align: start;
-    padding: 10px;
-    align-content: center;
-}
+
 .middle_div{
     display: flex;
     gap: 1rem;
@@ -35,12 +31,10 @@
     justify-content: center;
     align-items: center;
 }
-.login_div{
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    align-items: center;
+.logo_div {
+  padding: 10px;
 }
+
 
 .books_box {
     display: grid;
@@ -91,7 +85,7 @@
     cursor: pointer;
 }
 .image_box:hover img {
-  transform: scale(1.09);  /* zoom in */
+  transform: scale(1.02);  /* zoom in */
 }
 .books_name{
    cursor: pointer;
@@ -116,6 +110,11 @@
   background-color: #0f172a; /* dark blue */
   color: #e5e7eb;
   padding: 40px 20px 20px;
+  position: relative;
+  bottom: 0px;
+   left: 0;
+   width: 100%;
+   text-align: center;
 
 }
 
@@ -168,7 +167,15 @@
 .search_box {
   position: relative;
 }
-
+#searchInput{
+  width: 160px;
+  height: 30px;
+  border-style: none;
+  transition: 0.4s;
+}
+#searchInput:focus{
+  width: 200px;
+}
 .search_box input {
   padding: 6px 10px;
   border-radius: 5px;
@@ -230,6 +237,7 @@
   cursor: pointer;
   padding: 3px 10px; 
   background-color: #e5e7eb;
+
 }
 #grade-level{
   border-style: none;
